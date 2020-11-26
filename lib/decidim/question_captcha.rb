@@ -40,5 +40,9 @@ module Decidim
     config_accessor :raise_error do
       false
     end
+
+    config_accessor :api_endpoint do
+      nil
+    end
   end
 end
