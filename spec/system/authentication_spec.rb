@@ -24,15 +24,7 @@ describe "Authentication", type: :system do
         find(".sign-up-link").click
 
         within ".new_user" do
-          fill_in :user_email, with: "user@example.org"
-          fill_in :user_name, with: "Responsible Citizen"
-          fill_in :user_nickname, with: "responsible"
-          fill_in :user_password, with: "DfyvHn425mYAy2HL"
-          fill_in :user_password_confirmation, with: "DfyvHn425mYAy2HL"
-          fill_in :user_textcaptcha_answer, with: "2"
-          check :user_tos_agreement
-          check :user_newsletter
-          find("*[type=submit]").click
+          fill_fields(captcha_answer: "2")
         end
 
         expect(page).to have_content("You have signed up successfully")
@@ -50,15 +42,7 @@ describe "Authentication", type: :system do
         find(".sign-up-link").click
 
         within ".new_user" do
-          fill_in :user_email, with: "user@example.org"
-          fill_in :user_name, with: "Responsible Citizen"
-          fill_in :user_nickname, with: "responsible"
-          fill_in :user_password, with: "DfyvHn425mYAy2HL"
-          fill_in :user_password_confirmation, with: "DfyvHn425mYAy2HL"
-          fill_in :user_textcaptcha_answer, with: "3"
-          check :user_tos_agreement
-          check :user_newsletter
-          find("*[type=submit]").click
+          fill_fields(captcha_answer: "3")
         end
 
         expect(page).to have_content("¡Bienvenida! Te has registrado con éxito.")
@@ -77,15 +61,7 @@ describe "Authentication", type: :system do
         find(".sign-up-link").click
 
         within ".new_user" do
-          fill_in :user_email, with: "another_user@example.org"
-          fill_in :user_name, with: "Another Responsible Citizen"
-          fill_in :user_nickname, with: "another_responsible"
-          fill_in :user_password, with: "DfyvHn425mYAy2HL"
-          fill_in :user_password_confirmation, with: "DfyvHn425mYAy2HL"
-          fill_in :user_textcaptcha_answer, with: "2"
-          check :user_tos_agreement
-          check :user_newsletter
-          find("*[type=submit]").click
+          fill_fields(captcha_answer: "2")
         end
 
         expect(page).to have_content("Benvinguda! Has iniciat la sessió amb èxit.")
@@ -98,16 +74,7 @@ describe "Authentication", type: :system do
         find(".sign-up-link").click
 
         within ".new_user" do
-          page.execute_script("$($('.new_user > div > input')[0]).val('Ima robot :D')")
-          fill_in :user_email, with: "user@example.org"
-          fill_in :user_name, with: "Responsible Citizen"
-          fill_in :user_nickname, with: "responsible"
-          fill_in :user_password, with: "DfyvHn425mYAy2HL"
-          fill_in :user_password_confirmation, with: "DfyvHn425mYAy2HL"
-          fill_in :user_textcaptcha_answer, with: "2"
-          check :user_tos_agreement
-          check :user_newsletter
-          find("*[type=submit]").click
+          fill_fields(captcha_answer: "2", robot: true)
         end
 
         expect(page).not_to have_content("You have signed up successfully")
@@ -119,16 +86,7 @@ describe "Authentication", type: :system do
         find(".sign-up-link").click
 
         within ".new_user" do
-          page.execute_script("$($('.new_user > div > input')[0]).val('Ima robot :D')")
-          fill_in :user_email, with: "user@example.org"
-          fill_in :user_name, with: "Responsible Citizen"
-          fill_in :user_nickname, with: "responsible"
-          fill_in :user_password, with: "DfyvHn425mYAy2HL"
-          fill_in :user_password_confirmation, with: "DfyvHn425mYAy2HL"
-          fill_in :user_textcaptcha_answer, with: "wrong"
-          check :user_tos_agreement
-          check :user_newsletter
-          find("*[type=submit]").click
+          fill_fields(captcha_answer: "wrong")
         end
 
         expect(page).not_to have_content("You have signed up successfully")
@@ -146,5 +104,22 @@ describe "Authentication", type: :system do
         expect(page).not_to have_field(:user_textcaptcha_answer)
       end
     end
+  end
+
+  private
+
+  def fill_fields(captcha_answer: nil, robot: false)
+    if robot
+      page.execute_script("$($('.new_user > div > input')[0]).val('Ima robot :D')")
+    end
+    fill_in :user_email, with: "user@example.org"
+    fill_in :user_name, with: "Responsible Citizen"
+    fill_in :user_nickname, with: "responsible"
+    fill_in :user_password, with: "DfyvHn425mYAy2HL"
+    fill_in :user_password_confirmation, with: "DfyvHn425mYAy2HL"
+    fill_in :user_textcaptcha_answer, with: captcha_answer
+    check :user_tos_agreement
+    check :user_newsletter
+    find("*[type=submit]").click
   end
 end
