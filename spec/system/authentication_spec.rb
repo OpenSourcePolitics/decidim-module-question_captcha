@@ -11,6 +11,8 @@ describe "Authentication", type: :system do
       es: [{ "question" => "2+1", "answers" => "3" }]
     }
   end
+  let(:api_questions) { nil }
+  let(:api_endpoint) { nil }
   let(:en_api_questions) do
     { "q" => "What is the color of the white horse", "a" => [Digest::MD5.hexdigest("white")] }
   end
@@ -94,11 +96,13 @@ describe "Authentication", type: :system do
     end
 
     context "when using api provided questions" do
+      let(:api_endpoint) { "https:://mock-api.org" }
+
       before do
-        allow(Decidim::QuestionCaptcha.config).to receive(:api_endpoint).and_return("https:://mock-api.org")
         # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(Decidim::RegistrationForm).to receive(:fetch_q_and_a).and_return(api_questions)
         # rubocop:enable RSpec/AnyInstance
+        allow(Decidim::QuestionCaptcha.config).to receive(:api_endpoint).and_return(api_endpoint)
       end
 
       context "when using email and password" do
@@ -109,88 +113,88 @@ describe "Authentication", type: :system do
 
           expect(page).to have_content("You have signed up successfully")
         end
+      end
 
-        context "when using another language" do
-          let(:api_questions) { es_api_questions }
+      context "when using another language" do
+        let(:api_questions) { es_api_questions }
 
-          before do
-            within_language_menu do
-              click_link "Castellano"
-            end
-          end
-
-          it "keeps the locale settings" do
-            sign_up_user(captcha_answer: "gris")
-
-            expect(page).to have_content("¡Bienvenida! Te has registrado con éxito.")
-            expect(last_user.locale).to eq("es")
+        before do
+          within_language_menu do
+            click_link "Castellano"
           end
         end
 
-        context "when using a language which has no translated question" do
-          let(:api_questions) { en_api_questions }
+        it "keeps the locale settings" do
+          sign_up_user(captcha_answer: "gris")
 
-          before do
-            within_language_menu do
-              click_link "Català"
-            end
-          end
+          expect(page).to have_content("¡Bienvenida! Te has registrado con éxito.")
+          expect(last_user.locale).to eq("es")
+        end
+      end
 
-          it "keeps the locale settings" do
-            sign_up_user(captcha_answer: "white")
+      context "when using a language which has no translated question" do
+        let(:api_questions) { en_api_questions }
 
-            expect(page).to have_content("Benvinguda! Has iniciat la sessió amb èxit.")
-            expect(last_user.locale).to eq("ca")
+        before do
+          within_language_menu do
+            click_link "Català"
           end
         end
 
-        context "when api response returns no question" do
-          let(:api_questions) { nil }
+        it "keeps the locale settings" do
+          sign_up_user(captcha_answer: "white")
 
-          before do
-            within_language_menu do
-              click_link "Castellano"
-            end
-          end
+          expect(page).to have_content("Benvinguda! Has iniciat la sessió amb èxit.")
+          expect(last_user.locale).to eq("ca")
+        end
+      end
 
-          it "falbacks to app questions" do
-            sign_up_user(captcha_answer: "3")
+      context "when api response returns no question" do
+        let(:api_questions) { nil }
 
-            expect(page).to have_content("¡Bienvenida! Te has registrado con éxito.")
-            expect(last_user.locale).to eq("es")
+        before do
+          within_language_menu do
+            click_link "Castellano"
           end
         end
 
-        context "when being a robot" do
-          let(:api_questions) { en_api_questions }
+        it "falbacks to app questions" do
+          sign_up_user(captcha_answer: "3")
 
-          it "denies the sign up" do
-            sign_up_user(captcha_answer: "white", robot: true)
+          expect(page).to have_content("¡Bienvenida! Te has registrado con éxito.")
+          expect(last_user.locale).to eq("es")
+        end
+      end
 
-            expect(page).not_to have_content("You have signed up successfully")
-          end
+      context "when being a robot" do
+        let(:api_questions) { en_api_questions }
+
+        it "denies the sign up" do
+          sign_up_user(captcha_answer: "white", robot: true)
+
+          expect(page).not_to have_content("You have signed up successfully")
+        end
+      end
+
+      context "when captcha is wrong" do
+        let(:api_questions) { en_api_questions }
+
+        it "denies the sign up" do
+          sign_up_user(captcha_answer: "wrong")
+
+          expect(page).not_to have_content("You have signed up successfully")
+        end
+      end
+
+      context "when using :null_store" do
+        before do
+          allow(Rails.application.config).to receive(:cache_store).with(:null_store)
         end
 
-        context "when captcha is wrong" do
-          let(:api_questions) { en_api_questions }
+        it "doesn't display a captcha field" do
+          find(".sign-up-link").click
 
-          it "denies the sign up" do
-            sign_up_user(captcha_answer: "wrong")
-
-            expect(page).not_to have_content("You have signed up successfully")
-          end
-        end
-
-        context "when using :null_store" do
-          before do
-            allow(Rails.application.config).to receive(:cache_store).with(:null_store)
-          end
-
-          it "doesn't display a captcha field" do
-            find(".sign-up-link").click
-
-            expect(page).not_to have_field(:user_textcaptcha_answer)
-          end
+          expect(page).not_to have_field(:user_textcaptcha_answer)
         end
       end
     end
