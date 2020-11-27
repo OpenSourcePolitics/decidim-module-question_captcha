@@ -47,16 +47,16 @@ module Decidim
           return unless should_fetch?
 
           ActsAsTextcaptcha::TextcaptchaApi.new(
-              api_key: textcaptcha_config[:api_key],
-              api_endpoint: api_endpoint(current_locale),
-              raise_errors: textcaptcha_config[:raise_errors]
+            api_key: textcaptcha_config[:api_key],
+            api_endpoint: api_endpoint(current_locale),
+            raise_errors: textcaptcha_config[:raise_errors]
           ).fetch
         end
 
         def assign_textcaptcha(q_and_a)
           super
 
-          assign_textcaptcha(config_q_and_a) if self.textcaptcha_question.nil? || self.textcaptcha_key.nil?
+          assign_textcaptcha(config_q_and_a) if textcaptcha_question.nil? || textcaptcha_key.nil?
         end
 
         def api_endpoint(locale)

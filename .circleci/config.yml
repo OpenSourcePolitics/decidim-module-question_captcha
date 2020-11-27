@@ -40,6 +40,10 @@ jobs:
           command: bundle exec rake decidim:generate_external_test_app
 
       - run:
+          name: Rubocop Lint
+          command: bundle exec rubocop -P
+
+      - run:
           name: Run RSpec tests
           command: bundle exec rspec
 

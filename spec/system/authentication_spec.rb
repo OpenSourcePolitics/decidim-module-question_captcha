@@ -7,8 +7,8 @@ describe "Authentication", type: :system do
   let(:last_user) { Decidim::User.last }
   let(:app_questions) do
     {
-        en: [{ "question" => "1+1", "answers" => "2" }],
-        es: [{ "question" => "2+1", "answers" => "3" }]
+      en: [{ "question" => "1+1", "answers" => "2" }],
+      es: [{ "question" => "2+1", "answers" => "3" }]
     }
   end
   let(:en_api_questions) do
@@ -73,7 +73,6 @@ describe "Authentication", type: :system do
       end
 
       context "when captcha is wrong" do
-
         it "denies the sign up" do
           sign_up_user(captcha_answer: "wrong")
 
@@ -97,7 +96,9 @@ describe "Authentication", type: :system do
     context "when using api provided questions" do
       before do
         allow(Decidim::QuestionCaptcha.config).to receive(:api_endpoint).and_return("https:://mock-api.org")
+        # rubocop:disable RSpec/AnyInstance
         allow_any_instance_of(Decidim::RegistrationForm).to receive(:fetch_q_and_a).and_return(api_questions)
+        # rubocop:enable RSpec/AnyInstance
       end
 
       context "when using email and password" do
@@ -111,6 +112,7 @@ describe "Authentication", type: :system do
 
         context "when using another language" do
           let(:api_questions) { es_api_questions }
+
           before do
             within_language_menu do
               click_link "Castellano"
@@ -200,9 +202,7 @@ describe "Authentication", type: :system do
     find(".sign-up-link").click
 
     within ".new_user" do
-      if robot
-        page.execute_script("$($('.new_user > div > input')[0]).val('Ima robot :D')")
-      end
+      page.execute_script("$($('.new_user > div > input')[0]).val('Ima robot :D')") if robot
       fill_in :user_email, with: "user@example.org"
       fill_in :user_name, with: "Responsible Citizen"
       fill_in :user_nickname, with: "responsible"
