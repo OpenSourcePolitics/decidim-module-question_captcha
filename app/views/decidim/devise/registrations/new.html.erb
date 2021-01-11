@@ -83,10 +83,10 @@
           </div>
 
           <% if @form.textcaptcha_question %>
-            <div class="card">
+            <div class="card" id="question_captcha">
               <div class="card__content">
                 <legend><%= t(".captcha_legend") %></legend>
-                <p><%= t(".captcha_instructions") %></p>
+                <em><%= t(".captcha_instructions") %></em>
                 <%= textcaptcha_fields(f) do %>
                   <div class="field">
                     <%= f.label :textcaptcha_answer, @form.textcaptcha_question %><br/>
@@ -111,3 +111,4 @@
   </div>
 </main>
 <%= render "decidim/devise/shared/newsletter_modal" %>
+<%= stylesheet_link_tag    "decidim/question_captcha/application", media: "all" %>
