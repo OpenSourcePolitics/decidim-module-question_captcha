@@ -19,5 +19,5 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
 
   s.add_dependency "acts_as_textcaptcha", "~> 4.5.1"
-  s.add_dependency "decidim-core", Decidim::QuestionCaptcha.version
+  s.add_dependency "decidim-core", "~> #{Decidim::QuestionCaptcha.version}"
 end
