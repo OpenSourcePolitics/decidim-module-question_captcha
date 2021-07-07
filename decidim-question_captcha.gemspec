@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = ["fardeauarmand@gmail.com"]
   s.license = "AGPL-3.0"
   s.homepage = "https://github.com/decidim/decidim-module-question_captcha"
-  s.required_ruby_version = ">= 2.5"
+  s.required_ruby_version = ">= 2.7"
 
   s.name = "decidim-question_captcha"
   s.summary = "A decidim question_captcha module"
