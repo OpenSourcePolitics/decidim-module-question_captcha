@@ -1,5 +1,5 @@
 ---
-en:
+es:
   decidim:
     devise:
       registrations:
@@ -7,6 +7,7 @@ en:
           captcha_legend: Pregunta de Seguridad
           captcha_instructions: Complete su respuesta a continuación
           textcaptcha_answer: "TextCaptcha answer"
+          textcaptcha_help: Esta pregunta se hace para asegurar que es un humano y no un ordenador el que está intentando crear una cuenta.
   activerecord:
     errors:
       models:

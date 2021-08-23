@@ -91,6 +91,9 @@
                   <div class="field">
                     <%= f.label :textcaptcha_answer, @form.textcaptcha_question %><br/>
                     <%= f.text_field :textcaptcha_answer, label: t(".textcaptcha_answer"), :value => '' %>
+                    <small>
+                      <%= t(".textcaptcha_help") %>
+                    </small>
                   </div>
                 <% end %>
               </div>

@@ -1,5 +1,5 @@
 ---
-en:
+ca:
   decidim:
     devise:
       registrations:
@@ -7,6 +7,7 @@ en:
           captcha_legend: Pregunta de seguretat
           captcha_instructions: Empleneu la vostra resposta a continuació
           textcaptcha_answer: "Resposta TextCaptcha"
+          textcaptcha_help: This question is asked to verify that it is a human and not a computer that is trying to create an account.
   activerecord:
     errors:
       models:

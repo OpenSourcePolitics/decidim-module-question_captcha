@@ -7,6 +7,7 @@ en:
           captcha_legend: Security question
           captcha_instructions: Fill your answer below
           textcaptcha_answer: "TextCaptcha answer"
+          textcaptcha_help: This question is asked to verify that it is a human and not a computer that is trying to create an account.
   activerecord:
     errors:
       models:
