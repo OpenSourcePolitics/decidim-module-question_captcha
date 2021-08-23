@@ -34,7 +34,7 @@ module Decidim
     end
 
     config_accessor :expiration_time do
-      10
+      25
     end
 
     config_accessor :raise_error do
