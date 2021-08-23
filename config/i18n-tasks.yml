@@ -5,6 +5,9 @@ locales: [en]
 
 ignore_unused:
   - "decidim.components.question_captcha.name"
+  - activerecord.errors.models.comment.attributes.textcaptcha_answer.*
 
 ignore_missing:
   - decidim.participatory_processes.scopes.global
+  - decidim.devise.registrations.new.*
+  - devise.registrations.new.sign_up
