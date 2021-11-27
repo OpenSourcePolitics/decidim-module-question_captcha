@@ -1,0 +1,18 @@
+---
+cs:
+  decidim:
+    devise:
+      registrations:
+        new:
+          captcha_legend: Bezpečnostní otázka
+          captcha_instructions: Napište odpověď
+          textcaptcha_answer: "odpověď TextCaptcha"
+  activerecord:
+    errors:
+      models:
+        comment:
+          attributes:
+            textcaptcha_answer:
+              incorrect: "je nesprávná, zkuste jinou otázku"
+              expired: "nebyla odeslána dostatečně rychle, zkuste místo toho jinou otázku"
+
