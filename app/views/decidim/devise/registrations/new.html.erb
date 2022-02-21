@@ -82,17 +82,19 @@
             </div>
           </div>
 
-          <%= textcaptcha_fields(f) do %>
-            <div class="card" id="question_captcha">
-              <div class="card__content">
-                <legend><%= t(".captcha_legend") %></legend>
-                <em><%= t(".captcha_instructions") %></em>
-                <div class="field">
-                  <%= f.label :textcaptcha_answer, @form.textcaptcha_question %><br/>
-                  <%= f.text_field :textcaptcha_answer, label: t(".textcaptcha_answer"), :value => '' %>
+          <% if @form.perform_textcaptcha? %>
+            <%= textcaptcha_fields(f) do %>
+              <div class="card" id="question_captcha">
+                <div class="card__content">
+                  <legend><%= t(".captcha_legend") %></legend>
+                  <em><%= t(".captcha_instructions") %></em>
+                  <div class="field">
+                    <%= f.label :textcaptcha_answer, @form.textcaptcha_question %><br/>
+                    <%= f.text_field :textcaptcha_answer, label: t(".textcaptcha_answer"), :value => '' %>
+                  </div>
                 </div>
               </div>
-            </div>
+            <% end %>
           <% end %>
 
           <div class="card">
