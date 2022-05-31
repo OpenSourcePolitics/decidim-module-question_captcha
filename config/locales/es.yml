@@ -7,10 +7,11 @@ es:
           captcha_legend: Pregunta de Seguridad
           captcha_instructions: Complete su respuesta a continuación
           textcaptcha_answer: "TextCaptcha answer"
+          textcaptcha_help: Esta pregunta se hace para asegurar que es un humano y no un ordenador el que está intentando crear una cuenta.
   activerecord:
     errors:
       models:
-        comment:
+        registration:
           attributes:
             textcaptcha_answer:
               incorrect: "es incorrecta, intente con otra pregunta en su lugar"
