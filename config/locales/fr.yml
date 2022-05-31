@@ -10,11 +10,14 @@ fr:
                 question
               incorrect: est incorrect, essayez plutôt une autre question
   decidim:
-    devise:
-      registrations:
-        new:
-          captcha_instructions: Remplissez votre réponse dans le champ ci-dessous
-          captcha_legend: Question de sécurité
-          textcaptcha_answer: Réponse à la question Captcha
-          textcaptcha_help: Cette question vous est posée afin de vérifier que c'est
-            bien un humain et non un ordinateur qui tente de créer un compte.
+    registrations:
+      new:
+        captcha_instructions: Remplissez votre réponse dans le champ ci-dessous
+        captcha_legend: Question de sécurité
+        textcaptcha_answer: Réponse à la question Captcha
+        textcaptcha_help: Cette question vous est posée afin de vérifier que c'est
+          bien un humain et non un ordinateur qui tente de créer un compte.
+  devise:
+    failure:
+      invited: Vous avez une invitation en attente, acceptez-la pour terminer la création
+        de votre compte.

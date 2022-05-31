@@ -79,7 +79,7 @@ module Decidim
         def textcaptcha_config
           Decidim::QuestionCaptcha.config
         end
-        
+
         def add_textcaptcha_error(too_slow: false)
           if too_slow
             errors.add(:textcaptcha_answer, :expired, message: I18n.t(".expired", scope: "activerecord.errors.models.registration.attributes.textcaptcha_answer"))

@@ -9,11 +9,13 @@ en:
               expired: was not submitted quickly enough, try another question instead
               incorrect: is incorrect, try another question instead
   decidim:
-    devise:
-      registrations:
-        new:
-          captcha_instructions: Fill your answer below
-          captcha_legend: Security question
-          textcaptcha_answer: TextCaptcha answer
-          textcaptcha_help: This question is asked to verify that it is a human and
-            not a computer that is trying to create an account.
+    registrations:
+      new:
+        captcha_instructions: Fill your answer below
+        captcha_legend: Security question
+        textcaptcha_answer: TextCaptcha answer
+        textcaptcha_help: This question is asked to verify that it is a human and
+          not a computer that is trying to create an account.
+  devise:
+    failure:
+      invited: Invited
