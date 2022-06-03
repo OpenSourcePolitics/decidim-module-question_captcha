@@ -75,10 +75,6 @@ module Decidim
 
           { "q" => random_question[:question], "a" => answers } if random_question && answers.present?
         end
-
-        def textcaptcha_config
-          Decidim::QuestionCaptcha.config
-        end
       end
     end
   end
