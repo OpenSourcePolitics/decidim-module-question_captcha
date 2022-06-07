@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", git: "https://github.com/decidim/decidim", branch: "release/0.25-stable"
+gem "decidim", git: "https://github.com/decidim/decidim", branch: "release/0.26-stable"
 gem "decidim-question_captcha", path: "."
 
 gem "acts_as_textcaptcha", "~> 4.5.1"
@@ -15,7 +15,7 @@ gem "uglifier", "~> 4.1"
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
-  gem "decidim-dev", git: "https://github.com/decidim/decidim", branch: "release/0.25-stable"
+  gem "decidim-dev", git: "https://github.com/decidim/decidim", branch: "release/0.26-stable"
 end
 
 group :development do
