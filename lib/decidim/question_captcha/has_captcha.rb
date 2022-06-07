@@ -42,9 +42,9 @@ module Decidim
         end
 
         def questions
-          return if textcaptcha_config[:questions].blank?
+          return if textcaptcha_config.questions.blank?
 
-          textcaptcha_config[:questions][current_locale] || textcaptcha_config[:questions][default_locale]
+          textcaptcha_config.questions[current_locale] || textcaptcha_config.questions[default_locale]
         end
 
         def fetch_q_and_a
