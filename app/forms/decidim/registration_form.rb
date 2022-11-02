@@ -28,6 +28,8 @@ module Decidim
     validate :nickname_unique_in_organization
     validate :no_pending_invitations_exist
 
+    validate :validate_textcaptcha, if: :perform_textcaptcha?, on: :validate_captcha
+
     def newsletter_at
       return nil unless newsletter?
 
