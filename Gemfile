@@ -9,6 +9,7 @@ gem "decidim-question_captcha", path: "."
 
 gem "acts_as_textcaptcha", "~> 4.5.1"
 gem "bootsnap", "~> 1.4"
+gem "deface"
 gem "puma", ">= 5.3.1"
 gem "uglifier", "~> 4.1"
 
