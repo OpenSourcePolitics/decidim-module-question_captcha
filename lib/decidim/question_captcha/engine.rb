@@ -28,6 +28,11 @@ module Decidim
           Decidim::Devise::RegistrationsController.class_eval do
             prepend(::DeviseRegistrationsController)
           end
+
+          Decidim::RegistrationForm.class_eval do
+            extend(ActsAsTextcaptcha::Textcaptcha)
+            include(Decidim::QuestionCaptcha::HasCaptcha)
+          end
         end
       end
     end
