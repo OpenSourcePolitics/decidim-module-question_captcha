@@ -15,7 +15,7 @@ module Decidim
         # root to: "question_captcha#index"
       end
 
-      initializer "[module_name].webpacker.assets_path" do
+      initializer "decidim_question_captcha.webpacker.assets_path" do
         Decidim.register_assets_path File.expand_path("app/packs", root)
       end
 
