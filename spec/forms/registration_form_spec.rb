@@ -19,7 +19,7 @@ module Decidim
     let(:password) { "S4CGQ9AM4ttJdPKS" }
     let(:password_confirmation) { password }
     let(:tos_agreement) { "1" }
-    let(:textcaptcha_answer) { "2" }
+    let(:textcaptcha_answer) { "100" }
 
     let(:attributes) do
       {
@@ -39,19 +39,12 @@ module Decidim
       }
     end
 
-    let(:app_questions) do
-      {
-        en: [{ "question" => "1+1", "answers" => "2" }],
-        es: [{ "question" => "2+1", "answers" => "3" }]
-      }
-    end
-
     let(:cache_store) { :memory_store }
 
     before do
       allow(Rails).to receive(:cache).and_return(ActiveSupport::Cache.lookup_store(cache_store))
       Rails.cache.clear
-      allow(Decidim::QuestionCaptcha.config).to receive(:questions).and_return(app_questions)
+      subject.textcaptcha
     end
 
     context "when everything is OK" do
@@ -83,59 +76,31 @@ module Decidim
     end
 
     context "when the email already exists" do
-      context "and a user has the email" do
-        let!(:user) { create(:user, organization: organization, email: email) }
+      let!(:user) { create(:user, organization: organization, email: email) }
 
-        it { is_expected.to be_invalid }
+      it { is_expected.to be_invalid }
 
-        context "and is pending to accept the invitation" do
-          let!(:user) { create(:user, organization: organization, email: email, invitation_token: "foo", invitation_accepted_at: nil) }
-
-          it { is_expected.to be_invalid }
-        end
-      end
-
-      context "and a user_group has the email" do
-        let!(:user_group) { create(:user_group, organization: organization, email: email) }
+      context "and is pending to accept the invitation" do
+        let!(:user) { create(:user, organization: organization, email: email, invitation_token: "foo", invitation_accepted_at: nil) }
 
         it { is_expected.to be_invalid }
       end
     end
 
     context "when the nickname already exists" do
-      context "and a user has the nickname" do
-        let!(:user) { create(:user, organization: organization, nickname: nickname.upcase) }
+      let!(:user) { create(:user, organization: organization, nickname: nickname) }
 
-        it { is_expected.to be_invalid }
+      it { is_expected.to be_invalid }
 
-        context "and is pending to accept the invitation" do
-          let!(:user) { create(:user, organization: organization, nickname: nickname, invitation_token: "foo", invitation_accepted_at: nil) }
+      context "and is pending to accept the invitation" do
+        let!(:user) { create(:user, organization: organization, nickname: nickname, invitation_token: "foo", invitation_accepted_at: nil) }
 
-          it { is_expected.to be_valid }
-        end
-      end
-
-      context "and a user_group has the nickname" do
-        let!(:user_group) { create(:user_group, organization: organization, nickname: nickname) }
-
-        it { is_expected.to be_invalid }
+        it { is_expected.to be_valid }
       end
     end
 
     context "when the nickname is too long" do
       let(:nickname) { "verylongnicknamethatcreatesanerror" }
-
-      it { is_expected.to be_invalid }
-    end
-
-    context "when the name is an email" do
-      let(:name) { "test@example.org" }
-
-      it { is_expected.to be_invalid }
-    end
-
-    context "when the nickname has spaces" do
-      let(:nickname) { "test example" }
 
       it { is_expected.to be_invalid }
     end
@@ -171,7 +136,7 @@ module Decidim
     end
 
     context "without textcaptcha" do
-      let(:captcha_answer) { nil }
+      let(:textcaptcha_answer) { nil }
 
       it { is_expected.to be_invalid }
     end
