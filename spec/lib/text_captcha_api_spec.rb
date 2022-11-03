@@ -7,15 +7,16 @@ module ActsAsTextcaptcha
     subject { described_class.new }
 
     before do
-      stub_request(:get, "https://textcaptcha.com:80/.json").
-        with(
+      stub_request(:get, "https://textcaptcha.com:80/.json")
+        .with(
           headers: {
-            'Accept'=>'*/*',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'Host'=>'textcaptcha.com',
-            'User-Agent'=>'Ruby'
-          }).
-        to_return(status: 200, body: "Forcing https", headers: {})
+            "Accept" => "*/*",
+            "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
+            "Host" => "textcaptcha.com",
+            "User-Agent" => "Ruby"
+          }
+        )
+        .to_return(status: 200, body: "Forcing https", headers: {})
     end
 
     describe "#get" do
