@@ -5,12 +5,6 @@ require "spec_helper"
 describe "Authentication", type: :system do
   let(:organization) { create(:organization) }
   let(:last_user) { Decidim::User.last }
-  let(:app_questions) do
-    {
-      en: [{ "question" => "1+1", "answers" => "2" }],
-      es: [{ "question" => "2+1", "answers" => "3" }]
-    }
-  end
   let(:api_questions) { nil }
   let(:api_endpoint) { nil }
   let(:en_api_questions) do
@@ -25,7 +19,6 @@ describe "Authentication", type: :system do
   before do
     allow(Rails).to receive(:cache).and_return(ActiveSupport::Cache.lookup_store(cache_store))
     Rails.cache.clear
-    allow(Decidim::QuestionCaptcha.config).to receive(:questions).and_return(app_questions)
     switch_to_host(organization.host)
     visit decidim.root_path
   end
@@ -34,7 +27,7 @@ describe "Authentication", type: :system do
     context "when using app provided questions" do
       context "when using email and password" do
         it "creates a new User" do
-          sign_up_user(captcha_answer: "2")
+          sign_up_user(captcha_answer: "100")
 
           expect(page).to have_content("confirmation link")
         end
@@ -48,7 +41,7 @@ describe "Authentication", type: :system do
         end
 
         it "keeps the locale settings" do
-          sign_up_user(captcha_answer: "3")
+          sign_up_user(captcha_answer: "50")
 
           expect(page).to have_content("Se ha enviado un mensaje con un enlace de confirmación")
           expect(last_user.locale).to eq("es")
@@ -63,7 +56,7 @@ describe "Authentication", type: :system do
         end
 
         it "keeps the locale settings" do
-          sign_up_user(captcha_answer: "2")
+          sign_up_user(captcha_answer: "20")
 
           expect(page).to have_content("S'ha enviat un missatge amb un enllaç de confirmació")
           expect(last_user.locale).to eq("ca")
@@ -72,7 +65,7 @@ describe "Authentication", type: :system do
 
       context "when being a robot" do
         it "denies the sign up" do
-          sign_up_user(captcha_answer: "2", robot: true)
+          sign_up_user(captcha_answer: "100", robot: true)
 
           expect(page).not_to have_content("confirmation link")
         end
@@ -161,7 +154,7 @@ describe "Authentication", type: :system do
         end
 
         it "falbacks to app questions" do
-          sign_up_user(captcha_answer: "3")
+          sign_up_user(captcha_answer: "50")
 
           expect(page).to have_content("Se ha enviado un mensaje con un enlace de confirmación")
           expect(last_user.locale).to eq("es")

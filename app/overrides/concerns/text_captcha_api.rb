@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module TextCaptchaApiExtend
+module TextCaptchaApi
   def get
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
@@ -16,8 +16,4 @@ module TextCaptchaApiExtend
          Net::ProtocolError => e
     handle_error ResponseError.new(uri, e)
   end
-end
-
-ActsAsTextcaptcha::TextcaptchaApi.class_eval do
-  prepend(TextCaptchaApiExtend)
 end
