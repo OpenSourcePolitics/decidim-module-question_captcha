@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module CreateRegistrationExtend
+module CreateRegistration
   def call
     if form.invalid?(context: :validate_captcha)
       user = Decidim::User.has_pending_invitations?(form.current_organization.id, form.email)
@@ -14,8 +14,4 @@ module CreateRegistrationExtend
   rescue ActiveRecord::RecordInvalid
     broadcast(:invalid)
   end
-end
-
-Decidim::CreateRegistration.class_eval do
-  prepend(CreateRegistrationExtend)
 end
