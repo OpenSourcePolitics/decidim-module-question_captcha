@@ -7,7 +7,7 @@ ruby RUBY_VERSION
 base_path = "../" if File.basename(__dir__) == "development_app"
 require_relative "#{base_path}lib/decidim/question_captcha/version"
 
-DECIDIM_VERSION = Decidim::QuestionCaptcha::decidim_compatibility_version
+DECIDIM_VERSION = Decidim::QuestionCaptcha.decidim_compatibility_version
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-question_captcha", path: "."
