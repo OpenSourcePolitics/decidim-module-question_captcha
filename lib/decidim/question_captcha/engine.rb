@@ -36,7 +36,7 @@ module Decidim
           end
 
           Decidim::CreateRegistration.class_eval do
-            prepend(::CreateRegistration)
+            prepend(::CreateRegistrationExtend)
           end
         end
       end
