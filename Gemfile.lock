@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    decidim-question_captcha (0.26.0)
+    decidim-question_captcha (2.0)
       acts_as_textcaptcha (~> 4.5.1)
-      decidim-core (= 0.26.0)
+      decidim-core (~> 0.26)
 
 GEM
   remote: https://rubygems.org/
