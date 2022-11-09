@@ -138,7 +138,15 @@ module Decidim
     context "without textcaptcha" do
       let(:textcaptcha_answer) { nil }
 
-      it { is_expected.to be_invalid }
+      context "and not asked for its validation" do
+        it { is_expected.to be_valid }
+      end
+
+      context "and asked for its validation" do
+        it "returns invalid" do
+          expect(subject.valid?(context: :validate_captcha)).to eq(false)
+        end
+      end
     end
   end
 end

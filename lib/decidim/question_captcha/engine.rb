@@ -32,6 +32,11 @@ module Decidim
           Decidim::RegistrationForm.class_eval do
             extend(ActsAsTextcaptcha::Textcaptcha)
             include(Decidim::QuestionCaptcha::HasCaptcha)
+            include(::RegistrationFormValidation)
+          end
+
+          Decidim::CreateRegistration.class_eval do
+            prepend(::CreateRegistrationExtend)
           end
         end
       end
