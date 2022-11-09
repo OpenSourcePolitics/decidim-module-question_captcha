@@ -15,8 +15,30 @@ module Decidim
         # root to: "question_captcha#index"
       end
 
-      initializer "[module_name].webpacker.assets_path" do
+      initializer "decidim_question_captcha.webpacker.assets_path" do
         Decidim.register_assets_path File.expand_path("app/packs", root)
+      end
+
+      initializer "decidim_question_captcha.overrides" do
+        config.to_prepare do
+          ActsAsTextcaptcha::TextcaptchaApi.class_eval do
+            prepend(::TextCaptchaApi)
+          end
+
+          Decidim::Devise::RegistrationsController.class_eval do
+            prepend(::DeviseRegistrationsController)
+          end
+
+          Decidim::RegistrationForm.class_eval do
+            extend(ActsAsTextcaptcha::Textcaptcha)
+            include(Decidim::QuestionCaptcha::HasCaptcha)
+            include(::RegistrationFormValidation)
+          end
+
+          Decidim::CreateRegistration.class_eval do
+            prepend(::CreateRegistrationExtend)
+          end
+        end
       end
     end
   end
