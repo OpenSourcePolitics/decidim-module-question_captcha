@@ -8,12 +8,12 @@ module TextCaptchaApi
     if response.code == "200"
       response.body
     else
-      handle_error ResponseError.new(uri, "status: #{response.code}")
+      handle_error ActsAsTextcaptcha::ResponseError.new(uri, "status: #{response.code}")
     end
   rescue SocketError, Timeout::Error, Errno::EINVAL, Errno::ECONNRESET,
          Errno::EHOSTUNREACH, EOFError, Errno::ECONNREFUSED, Errno::ETIMEDOUT,
          Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError,
          Net::ProtocolError => e
-    handle_error ResponseError.new(uri, e)
+    handle_error ActsAsTextcaptcha::ResponseError.new(uri, e)
   end
 end
