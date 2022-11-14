@@ -56,7 +56,7 @@ module Decidim
     end
 
     config_accessor :api_endpoint do
-      nil
+      "https://testm1obgqmc-decidimcaptchaapi.functions.fnc.fr-par.scw.cloud/"
     end
   end
 end
