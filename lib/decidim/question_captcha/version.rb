@@ -4,7 +4,7 @@ module Decidim
   # This holds the decidim-meetings version.
   module QuestionCaptcha
     def self.version
-      "0.26.2"
+      "0.27.1"
     end
   end
 end
