@@ -2,7 +2,7 @@
 
 module CreateRegistrationExtend
   def call
-    if form.invalid?(context: :validate_captcha)
+    if form.invalid?(:validate_captcha)
       user = Decidim::User.has_pending_invitations?(form.current_organization.id, form.email)
       user.invite!(user.invited_by) if user
       return broadcast(:invalid)

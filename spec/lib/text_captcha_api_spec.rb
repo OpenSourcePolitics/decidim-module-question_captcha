@@ -43,7 +43,7 @@ module ActsAsTextcaptcha
 
       describe "#get" do
         it "returns nothing" do
-          expect(subject.get).to eq(nil)
+          expect(subject.get).to be_nil
         end
       end
     end
