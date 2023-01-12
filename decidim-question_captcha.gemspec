@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency "acts_as_textcaptcha", "~> 4.5.1"
   s.add_dependency "decidim-core", Decidim::QuestionCaptcha.decidim_compatibility_version
+  s.metadata["rubygems_mfa_required"] = "true"
 end

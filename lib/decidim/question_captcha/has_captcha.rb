@@ -21,6 +21,8 @@ module Decidim
                             cache_expiry_minutes: Decidim::QuestionCaptcha.config.expiration_time,
                             questions: captcha_questions
 
+        cattr_accessor :textcaptcha_key
+
         def perform_textcaptcha?
           return unless cache_enabled?
 

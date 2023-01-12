@@ -144,7 +144,7 @@ module Decidim
 
       context "and asked for its validation" do
         it "returns invalid" do
-          expect(subject.valid?(context: :validate_captcha)).to eq(false)
+          expect(subject.valid?(:validate_captcha)).to be(false)
         end
       end
     end
