@@ -85,7 +85,7 @@ describe "Authentication", type: :system do
         it "doesn't display a captcha field" do
           find(".sign-up-link").click
 
-          expect(page).not_to have_field(:user_textcaptcha_answer)
+          expect(page).not_to have_css("#registration_user_textcaptcha_answer")
         end
       end
     end
@@ -187,15 +187,26 @@ describe "Authentication", type: :system do
         it "doesn't display a captcha field" do
           find(".sign-up-link").click
 
-          expect(page).not_to have_field(:user_textcaptcha_answer)
+          expect(page).not_to have_css("#registration_user_textcaptcha_answer")
         end
+      end
+    end
+
+    context "when form is invalid" do
+      it "renders a new form with text captcha field" do
+        find(".sign-up-link").click
+        sign_up_user(captcha_answer: "100", tos: false)
+
+        expect(page).not_to have_content("confirmation link")
+        # expect(page).to have_content("confirmation link")
+        expect(page).to have_css("#registration_user_textcaptcha_answer")
       end
     end
   end
 
   private
 
-  def sign_up_user(captcha_answer: nil, robot: false)
+  def sign_up_user(captcha_answer: nil, robot: false, tos: true)
     find(".sign-up-link").click
 
     within ".new_user" do
@@ -206,7 +217,7 @@ describe "Authentication", type: :system do
       fill_in :registration_user_password, with: "DfyvHn425mYAy2HL"
       fill_in :registration_user_password_confirmation, with: "DfyvHn425mYAy2HL"
       fill_in :registration_user_textcaptcha_answer, with: captcha_answer
-      check :registration_user_tos_agreement
+      check :registration_user_tos_agreement if tos
       check :registration_user_newsletter
       find("*[type=submit]").click
     end
