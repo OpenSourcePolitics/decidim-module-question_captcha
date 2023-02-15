@@ -198,7 +198,6 @@ describe "Authentication", type: :system do
         sign_up_user(captcha_answer: "100", tos: false)
 
         expect(page).not_to have_content("confirmation link")
-        # expect(page).to have_content("confirmation link")
         expect(page).to have_css("#registration_user_textcaptcha_answer")
       end
     end
