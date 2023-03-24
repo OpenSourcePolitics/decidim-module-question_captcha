@@ -35,6 +35,10 @@ module Decidim
           I18n.default_locale
         end
 
+        def fallback_locale
+          textcaptcha_config[:questions].keys.first
+        end
+
         private
 
         def cache_enabled?
@@ -44,7 +48,11 @@ module Decidim
         def questions
           return if textcaptcha_config[:questions].blank?
 
-          textcaptcha_config[:questions][current_locale] || textcaptcha_config[:questions][default_locale]
+          questions_for(current_locale) || questions_for(default_locale) || questions_for(fallback_locale)
+        end
+
+        def questions_for(locale)
+          textcaptcha_config[:questions][locale]
         end
 
         def fetch_q_and_a
