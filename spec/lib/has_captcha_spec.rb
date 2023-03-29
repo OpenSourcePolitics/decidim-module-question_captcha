@@ -20,13 +20,35 @@ module Decidim
         }
       end
 
+      let(:current_locale) { :en }
+      let(:default_locale) { :en }
+
       before do
+        allow(I18n).to receive(:locale).and_return(current_locale)
+        allow(I18n).to receive(:default_locale).and_return(default_locale)
         allow(Decidim::QuestionCaptcha.config).to receive(:questions).and_return(app_questions)
       end
 
       describe ".captcha_questions" do
         it "returns the questions from the config" do
           expect(subject.captcha_questions).to eq(app_questions)
+        end
+
+        context "when locale is not present" do
+          let(:current_locale) { :es }
+
+          it "returns the questions from the default locale" do
+            expect(subject.captcha_questions).to eq(app_questions)
+          end
+        end
+
+        context "when locale is not present and default locale is not present" do
+          let(:current_locale) { :es }
+          let(:default_locale) { :ca }
+
+          it "returns the questions from the fallback locale" do
+            expect(subject.captcha_questions).to eq(app_questions)
+          end
         end
       end
 
@@ -54,6 +76,12 @@ module Decidim
       describe "#default_locale" do
         it "returns the default locale" do
           expect(subject_instance.default_locale).to eq(I18n.default_locale)
+        end
+      end
+
+      describe "#fallback_locale" do
+        it "returns the fallback locale" do
+          expect(subject_instance.fallback_locale).to eq(app_questions.keys.first)
         end
       end
 
