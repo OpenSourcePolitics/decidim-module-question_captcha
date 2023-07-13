@@ -18,8 +18,9 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
 
-  s.add_dependency "acts_as_textcaptcha", "~> 4.5.1"
-  s.add_dependency "decidim-core", Decidim::QuestionCaptcha.decidim_compatibility_version
+  s.add_dependency "acts_as_textcaptcha", "~> 4.6.0"
+  s.add_dependency "decidim-core", Decidim::QuestionCaptcha.decidim_compatible_version
+  s.add_development_dependency "decidim-dev", "~> #{Decidim::QuestionCaptcha.decidim_compatible_version}"
   s.add_dependency "deface", "~> 1.6"
   s.metadata["rubygems_mfa_required"] = "true"
 end
