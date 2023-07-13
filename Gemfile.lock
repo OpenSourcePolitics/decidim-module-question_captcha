@@ -802,9 +802,9 @@ GEM
     zeitwerk (2.6.8)
 
 PLATFORMS
-  ruby
-  arm-64-darwin-21
+  arm64-darwin-21
   arm64-darwin-22
+  ruby
   x86_64-darwin-21
   x86_64-linux
 
