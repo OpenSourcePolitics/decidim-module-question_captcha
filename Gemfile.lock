@@ -3,7 +3,7 @@ PATH
   specs:
     decidim-question_captcha (3.0)
       acts_as_textcaptcha (~> 4.6.0)
-      decidim-core (~> 0.27)
+      decidim-core (~> 0.27.0)
       deface (~> 1.6)
 
 GEM
@@ -803,7 +803,7 @@ GEM
 
 PLATFORMS
   ruby
-  arm64-darwin-21
+  arm-64-darwin-21
   arm64-darwin-22
   x86_64-darwin-21
   x86_64-linux
