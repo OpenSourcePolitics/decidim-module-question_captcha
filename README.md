@@ -13,7 +13,7 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem "decidim-question_captcha", git: "https://github.com/OpenSourcePolitics/decidim-module-question_captcha.git"
-gem "acts_as_textcaptcha", "~> 4.5.1"
+gem "acts_as_textcaptcha", "~> 4.6.0"
 ```
 
 And then execute:
